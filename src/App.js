@@ -1,12 +1,12 @@
 import React ,{useEffect, useState}from 'react';
 import './App.css';
-import DataTable from 'react-data-table-component';
+import DataTable , { createTheme }from 'react-data-table-component';
 import {db} from "./firebase";
 import AddSkill from "./addSkill";
 
 function App() {
 
-  const[datas, setData] = useState([]);
+  const[datas, setDatas] = useState([]);
   const columns = [
               {
               name: 'Skills',
@@ -20,24 +20,48 @@ function App() {
               right: true,
               },
   ];
+  createTheme('solarized', {
+    text: {
+      primary: '#268bd2',
+      secondary: '#2aa198',
+    },
+    background: {
+      default: 'white',
+    },
+    context: {
+      background: '#cb4b16',
+      text: '#FFFFFF',
+    },
+    divider: {
+      default: '#073642',
+    },
+    action: {
+      button: 'rgba(0,0,0,.54)',
+      hover: 'rgba(0,0,0,.08)',
+      disabled: 'rgba(0,0,0,.12)',
+    },
+  });
+  
 
   useEffect(()=>{
     db.collection('data').orderBy('timestamp','desc').onSnapshot(snapshot=>{
-      setData(snapshot.docs.map(doc=>({
+      setDatas(snapshot.docs.map(doc=>({
         id:doc.id,
         ...doc.data()
       })));
     })
     },[]);
-    console.log(datas);
+      
+    
   return (
     <div className="App">
-      <DataTable
-         title="Experience On Web"
-         columns={columns}
-         data={datas}
-      />
-      <AddSkill/>
+        <DataTable
+          title="Experience On Web"
+          columns={columns}
+          data={datas}
+          theme="solarized"
+        />
+         <AddSkill/>
     </div>
   );
 }

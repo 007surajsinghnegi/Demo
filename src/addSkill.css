@@ -1,0 +1,22 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 10px auto ;
+    background-color: white;
+    border-top: 1px solid lightgray;
+    align-items: center;
+}
+.form__skill{
+    margin-bottom: 20px;
+}
+.form__skill>input{
+    margin-left: 20px;
+    align-self: center;
+}
+.form__rating{
+    margin-bottom: 20px;
+}
+.form__rating>input{
+    margin-left: 20px;
+}

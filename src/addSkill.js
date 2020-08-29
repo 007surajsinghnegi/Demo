@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {db} from "./firebase";
 import firebase from "firebase";
+import './addSkill.css';
 
 const AddSkill= ()=> {
 
@@ -10,11 +11,7 @@ const AddSkill= ()=> {
 
     function Submit(e) {
         e.preventDefault()
-        if(skill===null){
-            
-        }
-        else{
-            db.collection('data')
+        db.collection('data')
             .add({
                 skill,
                 rating,
@@ -24,16 +21,15 @@ const AddSkill= ()=> {
                 setSkill('')
                 setRating('')
             })
-        }
     }
     return (
-        <form onSubmit={Submit} >
+        <form onSubmit={Submit} className="form">
             <h3>Add Your Skill</h3>
-            <div>
+            <div className="form__skill">
                 <label>Skill</label>
                 <input type="text" value={skill} onChange={e=>setSkill(e.target.value)}/>
             </div>
-            <div>
+            <div className="form__rating">
                 <label>Rating</label>
                 <input type="number" value={rating} max="10" min="1" onChange={e=>setRating(e.target.value)}/>
             </div>
