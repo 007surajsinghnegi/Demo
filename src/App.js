@@ -2,6 +2,7 @@ import React ,{useEffect, useState}from 'react';
 import './App.css';
 import DataTable from 'react-data-table-component';
 import {db} from "./firebase";
+import AddSkill from "./addSkill";
 
 function App() {
 
@@ -9,11 +10,11 @@ function App() {
   const columns = [
               {
               name: 'Skills',
-              selector: 'skills',
+              selector: 'skill',
               sortable: true,
               },
               {
-              name: 'Rating',
+              name: 'Rating(10)',
               selector: 'rating',
               sortable: true,
               right: true,
@@ -21,7 +22,7 @@ function App() {
   ];
 
   useEffect(()=>{
-    db.collection('data').onSnapshot(snapshot=>{
+    db.collection('data').orderBy('timestamp','desc').onSnapshot(snapshot=>{
       setData(snapshot.docs.map(doc=>({
         id:doc.id,
         ...doc.data()
@@ -36,6 +37,7 @@ function App() {
          columns={columns}
          data={datas}
       />
+      <AddSkill/>
     </div>
   );
 }
